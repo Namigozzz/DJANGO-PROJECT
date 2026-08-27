@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Список файлов</title>
 </head>
 <body>
-    <h1>Файлы в директории:</h1>
+    <h1>Файлы в директории</h1>
     <ul>
-    {% for item in items %}
-        <li>{{ item }}</li>
-    {% endfor %}
+        {% for item in items %}
+            <li>{{ item }}</li>
+        {% endfor %}
     </ul>
 </body>
 </html>
