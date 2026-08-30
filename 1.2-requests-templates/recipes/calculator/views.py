@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 
 DATA = {
@@ -10,7 +11,7 @@ DATA = {
         'макароны, г': 0.3,
         'сыр, г': 0.05,
     },
-    'buter': {
+    'butter': {
         'хлеб, ломтик': 1,
         'колбаса, ломтик': 1,
         'сыр, ломтик': 1,
@@ -28,3 +29,22 @@ DATA = {
 #     'ингредиент2': количество2,
 #   }
 # }
+def get_recipe_ingredients(request, dish):
+    if dish in DATA:
+        ingredients = DATA[dish].copy()
+        context = {
+            'recipe': ingredients,
+        }
+
+        if request.GET.get('servings'):
+            servings = int(request.GET.get('servings'))
+
+            for ingredient, count in ingredients.items():
+                ingredients[ingredient] *= servings
+            context = {
+                'recipe': ingredients,
+            }
+
+        return render(request, 'calculator/index.html', context=context)
+    else:
+        return HttpResponse("Рецепт не найден!")
