@@ -16,12 +16,13 @@ class Command(BaseCommand):
 
         for phone in phones:
             # TODO: Добавьте сохранение модели
-            new_phone = Phone(
-                name=phone['name'],
-                image=phone['image'],
-                price=float(phone['price']),
-                release_date=datetime.strptime(phone['release_date'], '%Y-%m-%d').date(),
-                lte_exists=phone['lte_exists'].lower() == 'true',
+            Phone.objects.update_or_create(
                 slug=slugify(phone['name']),
+                defaults={
+                    'name': phone['name'],
+                    'image': phone['image'],
+                    'price': float(phone['price']),
+                    'release_date': datetime.strptime(phone['release_date'], '%Y-%m-%d').date(),
+                    'lte_exists': phone['lte_exists'].lower() == 'true',
+                }
             )
-            new_phone.save()
