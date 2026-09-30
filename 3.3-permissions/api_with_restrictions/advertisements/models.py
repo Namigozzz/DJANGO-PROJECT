@@ -29,3 +29,9 @@ class Advertisement(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True
     )
+
+class Favorite(models.Model):
+    """Избранное объявление."""
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="favorites")
+    advertisement = models.ForeignKey(Advertisement, on_delete=models.CASCADE, related_name="favorites")
